@@ -4,6 +4,8 @@ const INITIAL_STATE = {
   dogsCollection: null,
   errorMessage: undefined,
   isFetching: false,
+  isBreedFetching: false,
+  breeds: null,
 };
 
 export const dogReducer = (state = INITIAL_STATE, action) => {
@@ -20,6 +22,22 @@ export const dogReducer = (state = INITIAL_STATE, action) => {
         dogsCollection: action.payload,
       };
     case dogFetchActionTypes.FETCH_DOG_FAILURE:
+      return {
+        ...state,
+        errorMessage: action.payload,
+      };
+    case dogFetchActionTypes.FETCH_BREEDS_START:
+      return {
+        ...state,
+        isBreedFetching: true,
+      };
+    case dogFetchActionTypes.FETCH_BREEDS_SUCCESS:
+      return {
+        ...state,
+        isFetching: false,
+        breeds: action.payload,
+      };
+    case dogFetchActionTypes.FETCH_BREEDS_FAILURE:
       return {
         ...state,
         errorMessage: action.payload,

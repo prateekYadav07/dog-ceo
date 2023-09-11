@@ -36,3 +36,32 @@ export const fetchDogCollectionAsync = () => {
       .catch((error) => dispatch(fetchDogCollectionFailure(error.message)));
   };
 };
+
+export const fetchBreedsStart = () => ({
+  type: dogFetchActionTypes.FETCH_BREEDS_START,
+});
+
+export const fetchBreedsFailure = (message) => ({
+  type: dogFetchActionTypes.FETCH_BREEDS_FAILURE,
+  payload: message,
+});
+
+export const fetchBreedsSuccess = (breeds) => ({
+  type: dogFetchActionTypes.FETCH_BREEDS_SUCCESS,
+  payload: breeds,
+});
+
+export const fetchBreedsAsync = () => {
+  return (dispatch) => {
+    const breedsPromise = fetch("https://dog.ceo/api/breeds/list/all");
+    dispatch(fetchBreedsStart);
+
+    breedsPromise
+      .then((res) => res.json())
+      .then(async (res) => {
+        const breedsCollection = res["message"];
+        dispatch(fetchBreedsSuccess(breedsCollection));
+      })
+      .catch((error) => dispatch(fetchBreedsFailure(error.message)));
+  };
+};

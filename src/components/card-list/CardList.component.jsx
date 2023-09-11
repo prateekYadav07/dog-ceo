@@ -4,15 +4,13 @@ import { createStructuredSelector } from 'reselect';
 import { selectDogsCollections } from '../../redux/dog/dog.selector';
 import { connect } from 'react-redux';
 
-const CardList = ({ dogCollection }) => {
-    // props.children is innerHTML inside this component
-    console.log('sdvdsvds',dogCollection);
+const CardList = ({dogCollection}) => {
     return (
         <div className='card-list'>
             {
                 dogCollection.map((item) => {
                     return (
-                        <Card />
+                        <Card key={item.id} item={item} />
                     )
                 })
             }

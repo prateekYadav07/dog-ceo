@@ -1,14 +1,18 @@
 import { Component } from "react";
 import "./App.css";
-import CardList from "./components/card-list/CardList.component";
-import { SearchBox } from "./components/searchbox/SearchBox.component";
-import { fetchDogCollectionAsync } from "./redux/dog/dog.actions";
+import {
+  fetchBreedsAsync,
+  fetchDogCollectionAsync,
+} from "./redux/dog/dog.actions";
 import { connect } from "react-redux";
 import Dropdown from "./components/dropdown/Dropdown.components";
+import CardListContainer from "./components/card-list/card-list.container";
 
 class App extends Component {
   componentDidMount() {
-    this.props.dogCollectionFetchStartAsync();
+    const { dogCollectionFetchStartAsync, breedsFetchAsync } = this.props;
+    dogCollectionFetchStartAsync();
+    breedsFetchAsync();
   }
 
   // handleChange = (e) => {
@@ -19,13 +23,8 @@ class App extends Component {
     return (
       <div className="App">
         <h1>Dog CEO</h1>
-        {/* <SearchBox
-          placeholder="search monsters"
-          // handleChange={this.handleChange}
-        /> */}
-        {/* <Dropdown breeds={['a','b','c']}/> */}
-
-        <CardList />
+        {/* <Dropdown breeds={["a", "b", "c"]} /> */}
+        <CardListContainer />
       </div>
     );
   }
@@ -35,6 +34,9 @@ const mapDispatchToProps = (dispatch) => ({
   dogCollectionFetchStartAsync: () => {
     dispatch(fetchDogCollectionAsync());
   },
+  breedsFetchAsync: () => {
+    dispatch(fetchBreedsAsync());
+  },
 });
 
-export default connect(mapDispatchToProps)(App);
+export default connect(null, mapDispatchToProps)(App);
